@@ -9,6 +9,18 @@ endif
 let g:loaded_multi_os = 1
 "}}}
 
+" Internal Functions {{{
+function s:src_vimrc()
+	execute 'source' g:os_vimrc
+endfunction
+function s:src_gvimrc()
+	" Don't source it when the GUI is not running
+	if has('gui_running')
+		execute 'source' g:os_gvimrc
+	endif
+endfunction
+"}}}
+
 " OS detection {{{
 " Shameless ripoff: https://vi.stackexchange.com/a/2577
 if has('win32') || has('win64') || has('win16')
@@ -40,28 +52,16 @@ let s:local_vimrc = g:vim_dir.'/vimrc.'.g:os
 let s:local_gvimrc = g:vim_dir.'/gvimrc.'.g:os
 if filereadable(s:local_vimrc) "vimrc
 	let g:os_vimrc = s:local_vimrc
-	augroup multi_os
-		autocmd VimEnter * call <SID>src_vimrc()
-	augroup END
+	" After the vimrc
+	call <SID>src_vimrc()
 endif
 if filereadable(s:local_gvimrc) "gvimrc
 	let g:os_gvimrc = s:local_gvimrc
 	augroup multi_os
-		autocmd VimEnter * call <SID>src_gvimrc()
+		" After the gvimrc
+		autocmd GUIEnter * call s:src_gvimrc()
 	augroup END
 endif
-"}}}
-
-" Internal Functions {{{
-function s:src_vimrc()
-	execute 'source' g:os_vimrc
-endfunction
-function s:src_gvimrc()
-	" Don't source it when the GUI is not running
-	if has('gui_running')
-		execute 'source' g:os_gvimrc
-	endif
-endfunction
 "}}}
 
 " Modeline and other administrativia {{{
