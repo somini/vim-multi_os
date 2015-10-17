@@ -43,7 +43,7 @@ else
 	if g:os == 'Windows'
 		let g:vim_dir=expand('~/vimfiles')
 	elseif g:os == 'Linux' || g:os == 'Darwin'
-		let g:vim_dir=$HOME.'/.vim'
+		let g:vim_dir=expand($HOME.'/.vim')
 	else
 		finish " Unsupported, I can't make any guarantees
 	endif
@@ -51,8 +51,8 @@ endif
 "}}}
 
 " OS-Specific sourcing {{{
-let s:local_vimrc = g:vim_dir.'/vimrc.'.g:os
-let s:local_gvimrc = g:vim_dir.'/gvimrc.'.g:os
+let s:local_vimrc = expand(g:vim_dir.'/vimrc.'.g:os)
+let s:local_gvimrc = expand(g:vim_dir.'/gvimrc.'.g:os)
 if filereadable(s:local_vimrc) "vimrc
 	let g:os_vimrc = s:local_vimrc
 	" After the vimrc
@@ -68,7 +68,7 @@ endif
 "}}}
 
 " OS-Specific folders and plugins {{{
-let s:local_dir = g:vim_dir.'/multi_os/'.g:os
+let s:local_dir = expand(g:vim_dir.'/multi_os/'.g:os)
 
 if !filereadable(s:local_dir) "Don't do anything if there's a file there
 	if !isdirectory(s:local_dir)
