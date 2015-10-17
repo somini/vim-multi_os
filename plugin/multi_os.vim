@@ -9,7 +9,9 @@ endif
 let g:loaded_multi_os = 1
 "}}}
 
-" Internal Functions {{{
+" Internal Functions and Variables {{{
+let s:plugin_dir_name = 'bundle'
+
 function s:src_vimrc()
 	execute 'source' g:os_vimrc
 endfunction
@@ -62,6 +64,24 @@ if filereadable(s:local_gvimrc) "gvimrc
 		" After the gvimrc
 		autocmd GUIEnter * call s:src_gvimrc()
 	augroup END
+endif
+"}}}
+
+" OS-Specific folders and plugins {{{
+let s:local_dir = g:vim_dir.'/multi_os/'.g:os
+
+if !filereadable(s:local_dir) "Don't do anything if there's a file there
+	if !isdirectory(s:local_dir)
+		call mkdir(s:local_dir, 'p') "Create the directory if it doesn't exist
+	endif
+	let g:os_dir = s:local_dir
+
+	" Set up the "bundle" folder as a OS-specific plugin folder
+	" Only works for pathogen
+	let s:local_dir_plugin = s:local_dir.'/'.s:plugin_dir_name
+	if exists('*pathogen#surround') && isdirectory(s:local_dir_plugin)
+		call pathogen#surround(s:local_dir_plugin.'/{}')
+	endif
 endif
 "}}}
 
