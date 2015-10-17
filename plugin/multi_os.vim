@@ -37,13 +37,14 @@ endif
 " Source: :help vimrc
 if exists(g:user_dir) "Define this if you have a non-standard location
 	let g:vim_dir = g:user_dir
-endif
-if g:os == 'Windows'
-	let g:vim_dir=expand('~/vimfiles')
-elseif g:os == 'Linux' || g:os == 'Darwin'
-	let g:vim_dir=$HOME.'/.vim'
 else
-	finish " Unsupported, I can't make any guarantees
+	if g:os == 'Windows'
+		let g:vim_dir=expand('~/vimfiles')
+	elseif g:os == 'Linux' || g:os == 'Darwin'
+		let g:vim_dir=$HOME.'/.vim'
+	else
+		finish " Unsupported, I can't make any guarantees
+	endif
 endif
 "}}}
 
