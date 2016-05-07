@@ -6,7 +6,7 @@ In addition, it is possible to override the configuration for specific operating
 
 This files are sourced on `VimEnter`, after all other configuration is read. The GUI configs are read after the general configs, just like in `vimrc` and `gvimrc`.
 
-There's support for an extra folder on Windows that specifies the bit-ness of the OS. 
+There's support for an extra folder on Windows that specifies the bit-ness of the OS.
 
 # Examples
 
@@ -34,13 +34,15 @@ This plugin will expose several global variables.
 
 - `g:os` will contain:
  * `Windows` on any Windows system
-   * `g:os_bits` contains the bit-ness of the OS
  * The contents of `uname` in any POSIX compliant system. This usually means:
   * `Linux` on any distribution of Linux
   * `Darwin` on MacOS X *(I guess, I don't have access to a Mac, PR are welcome)*
 - `g:vim_dir` will contain the path to your local directory:
  * `~/_vimfiles` on Windows
  * `~/.vim` otherwise
+- `g:os_dir` contains an OS-specific folder
+- `g:os_bits` contains the bit-ness of the OS, on Windows
+- `g:os_dir_extra` contains an OS-specific folder, depending on the bit-ness
 
 The files sourced are `g:vim_dir.'/vim.'.g:os` and `g:vim_dir.'/gvim.'.g:os`.
 
