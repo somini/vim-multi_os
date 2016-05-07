@@ -6,6 +6,8 @@ In addition, it is possible to override the configuration for specific operating
 
 This files are sourced on `VimEnter`, after all other configuration is read. The GUI configs are read after the general configs, just like in `vimrc` and `gvimrc`.
 
+There's support for an extra folder on Windows that specifies the bit-ness of the OS. 
+
 # Examples
 
 If you want to keep the same configuration between Windows and Linux, just keep the `.vim` folder synchronized between hosts, renaming it `vimfiles` on Windows.
@@ -15,12 +17,14 @@ If you want to keep the same configuration between Windows and Linux, just keep 
     |- gvimrc
     |- vimrc.Linux
     |- vimrc.Windows
+    |- vimrc.Windows_64
     |- gvimrc.Linux
     \- gvimrc.Windows
 
 - The `vimrc` file contains general configuration. The `gvimrc` file contains GUI-specific configuration.
 - The `vimrc.Linux` and `gvimrc.Linux` files override the defaults on Linux hosts.
 - The `vimrc.Windows` and `gvimrc.Windows` files override the defaults on Windows hosts.
+- The `vimrc.Windows_64` file overrides all other files on 64bit Windows.
 
 None of this files need to exist, you can create them as needed.
 
@@ -30,6 +34,7 @@ This plugin will expose several global variables.
 
 - `g:os` will contain:
  * `Windows` on any Windows system
+   * `g:os_bits` contains the bit-ness of the OS
  * The contents of `uname` in any POSIX compliant system. This usually means:
   * `Linux` on any distribution of Linux
   * `Darwin` on MacOS X *(I guess, I don't have access to a Mac, PR are welcome)*
