@@ -10,7 +10,7 @@ let g:loaded_multi_os = 1
 "}}}
 
 " Internal Functions and Variables {{{
-let s:plugin_dir_name = 'bundle'
+let s:plugin_dir_name = 'plugins'
 
 function s:src_vimrc()
 	execute 'source' g:os_vimrc
@@ -108,17 +108,21 @@ if !filereadable(s:local_dir) "Don't do anything if there's a file there
 		let g:os_dir_extra = s:local_dir_extra
 	endif
 
-	" Set up the "bundle" folder as a OS-specific plugin folder
+	" Set up the "plugins" folder as a OS-specific plugin folder
 	" Only works for pathogen
 	let s:local_dir_plugin = s:local_dir.'/'.s:plugin_dir_name
 	if exists('s:local_dir_extra')
 		let s:local_dir_plugin_extra = s:local_dir_extra.'/'.s:plugin_dir_name
 	endif
-	if exists('*pathogen#surround') && isdirectory(s:local_dir_plugin)
-		call pathogen#surround(s:local_dir_plugin.'/{}')
-		if isdirectory(s:local_dir_plugin_extra)
+	if exists('*pathogen#surround')
+		call pathogen#surround(s:local_dir)
+		if isdirectory(s:local_dir_plugin)
+			call pathogen#surround(s:local_dir_plugin.'/{}')
+		endif
+		if exists('s:local_dir_plugin_extra') && isdirectory(s:local_dir_plugin_extra)
 			call pathogen#surround(s:local_dir_plugin_extra.'/{}')
 		endif
+		call pathogen#cycle_filetype()
 	endif
 endif
 "}}}
